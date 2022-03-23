@@ -1,0 +1,16 @@
+[Unit]
+Description=The rclone web interface
+Documentation=https://rclone.org/rc/
+Requires=network-online.target
+
+[Service]
+User=francois
+Group=users
+Type=simple
+ExecStart=/usr/bin/rclone rcd
+Environment=RCLONE_LOG_FILE=%h/.rclone/log/rclone.log
+EnvironmentFile=%h/.config/rclone/rclone.env
+
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=rclone: Remote FUSE filesystem for cloud storage config %i
+Documentation=man:rclone(1)
+After=network-online.target
+Wants=network-online.target
+AssertPathIsDirectory=%h/.rclone/mnt/%i
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/rclone/rclone.env
+Environment=RCLONE_LOG_FILE=%h/.rclone/log/rclone-%i.log
+ExecStart=/usr/bin/rclone mount %i: %h/.rclone/mnt/%i
+ExecStop=/bin/fusermount -u %h/.rclone/mnt/%i
+
+[Install]
+WantedBy=default.target
